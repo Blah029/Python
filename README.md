@@ -1,24 +1,8 @@
 # Python
-A couple of modules with some useful functions and other python code.</br>
-</br>
-1.  List item one.
+A couple of modules with some useful functions and other python code.
 
-    List item one continued with a second paragraph followed by an
-    Indented block.
-
-        $ ls *.sh
-        $ mv *.sh ~/tmp
-
-    List item continued with a third paragraph.
-
-2.  List item two continued with an open block.
-
-    This paragraph is part of the preceding list item.
-
-    1. This list is nested and does not require explicit item continuation.
-
-       This paragraph is part of the preceding list item.
-
-    2. List item b.
-
-    This paragraph belongs to item two of the outer list.
+- modules
+  - myMath
+    Simple mathematical functions to find fractions, prime numbers, LCM, etc.
+  - roughWork
+    Functions that might needed when debugging code
