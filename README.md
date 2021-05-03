@@ -7,4 +7,4 @@ A couple of modules with some useful functions, and other python code.
   - roughWork </br>
     Functions that might come in handy when debugging code.
 - projectEuler </br>
-  Solutions for Project Euler problems I attempted.
+  Solutions for attempted Project Euler problems.
