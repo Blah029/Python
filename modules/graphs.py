@@ -16,7 +16,7 @@ plt.minorticks_on()
 plt.show()
 """
 
-def setUpGrid(xLabel=None, yLabel=None, title=None):
+def setGrid(xLabel=None, yLabel=None, title=None):
     """COnfigures axis labels, title and other roperties"""
     plt.xlabel(xLabel)
     plt.ylabel(yLabel)
