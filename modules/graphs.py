@@ -17,7 +17,7 @@ plt.show()
 """
 
 def setGrid(xLabel=None, yLabel=None, title=None):
-    """COnfigures axis labels, title and other roperties"""
+    """Configures axis labels, title and other roperties"""
     plt.xlabel(xLabel)
     plt.ylabel(yLabel)
     plt.title(title)
@@ -26,7 +26,7 @@ def setGrid(xLabel=None, yLabel=None, title=None):
     plt.grid(which="minor", alpha=0.25)
     plt.minorticks_on()
 
-def plotBestFitLine(x,y, matchY=False, degree=1, plotLabel=None, plotColour="tab:blue"):
+def plotBestFit(x,y, matchY=False, degree=1, plotLabel=None, plotColour="tab:blue"):
     """Plots the best fit curve of given degree to fit given numpy arrays"""
     m,c = np.polyfit(x,y,degree)
     plt.plot(x,y,"o", color=plotColour)
