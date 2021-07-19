@@ -11,7 +11,7 @@ plt.ylabel(_string_)
 plt.title(_string_)
 plt.legend()
 plt.grid()
-plt.grid(which="minor",alpha=0.25))
+plt.grid(which="minor", alpha=0.25))
 """
 
 def plotBestFit(x,y, degree=1, plotLabel=None, plotColour="tab:blue"):
