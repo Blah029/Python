@@ -32,9 +32,8 @@ def plotBestFit(x,y, matchY=False, degree=1, plotLabel=None, plotColour="tab:blu
     plt.plot(x,y,"o", color=plotColour)
     
     if (matchY):
-        extrapolatedX=np.copy(x)
-        extrapolatedX[0] = (y[0]-c)/m
-        extrapolatedX[-1] = (y[-1]-c)/m
+        extrapolatedX=(np.array([y[0],y[-1]])-c)/m
         plt.plot(extrapolatedX,m*extrapolatedX+c, label=plotLabel, color=plotColour)
-
-    plt.plot(x,m*x+c, label=plotLabel, color=plotColour)
+    
+    else:
+        plt.plot(x,m*x+c, label=plotLabel, color=plotColour)
