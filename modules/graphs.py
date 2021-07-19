@@ -32,9 +32,9 @@ def plotBestFitLine(x,y, matchY=False, degree=1, plotLabel=None, plotColour="tab
     plt.plot(x,y,"o", color=plotColour)
     
     if (matchY):
-        xExtrapolated=np.copy(x)
-        xExtrapolated[0] = (y[0]-c)/m
-        xExtrapolated[-1] = (y[-1]-c)/m
-        plt.plot(xExtrapolated,m*xExtrapolated+c, label=plotLabel, color=plotColour)
+        extrapolatedX=np.copy(x)
+        extrapolatedX[0] = (y[0]-c)/m
+        extrapolatedX[-1] = (y[-1]-c)/m
+        plt.plot(extrapolatedX,m*extrapolatedX+c, label=plotLabel, color=plotColour)
 
     plt.plot(x,m*x+c, label=plotLabel, color=plotColour)
