@@ -1,5 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
+import matplotlib
 
 """
 figure template
@@ -26,8 +27,15 @@ def setGrid(xLabel=None, yLabel=None, title=None):
     plt.grid(which="minor", alpha=0.25)
     plt.minorticks_on()
 
-def plotBestFit(x,y, degree=1, plotLabel=None, plotColour="tab:blue"):
+def plotBestFitLine(x,y, matchY=False, degree=1, plotLabel=None, plotColour="tab:blue"):
     """Plots the best fit curve of given degree to fit given numpy arrays"""
-    m,b = np.polyfit(x,y,degree)
+    m,c = np.polyfit(x,y,degree)
     plt.plot(x,y,"o", color=plotColour)
-    plt.plot(x,m*x+b, label=plotLabel, color=plotColour)
+    
+    if (matchY):
+        xExtrapolated=np.copy(x)
+        xExtrapolated[0] = (y[0]-c)/m
+        xExtrapolated[-1] = (y[-1]-c)/m
+        plt.plot(xExtrapolated,m*xExtrapolated+c, label=plotLabel, color=plotColour)
+
+    plt.plot(x,m*x+c, label=plotLabel, color=plotColour)
