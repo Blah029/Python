@@ -18,13 +18,13 @@ for i in range(len(availableBands)):
 
         if (bandData[j] == availableBands[i]):
             approxGain[i] = gainData[j]
-            print("%5.0f"%availableBands[i],"Hz","%5.0f"%approxGain[i],"dB")
+            print("%5.0f"%availableBands[i],"Hz","%5.1f"%approxGain[i],"dB")
             break
         
         elif (bandData[j] > availableBands[i]):
             m,c = np.polyfit(np.array([math.log(bandData[j-1]),math.log(bandData[j])]),np.array([gainData[j-1],gainData[j]]),1)
             approxGain[i] = m*math.log(availableBands[i]) + c
-            print("%5.0f"%availableBands[i],"Hz","%5.0f"%approxGain[i],"dB")
+            print("%5.0f"%availableBands[i],"Hz","%5.1f"%approxGain[i],"dB")
             break
 
 plt.plot(bandData,gainData,label="{}-band preset".format(len(bandData)), color="tab:blue")
