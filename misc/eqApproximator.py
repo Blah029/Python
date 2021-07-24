@@ -45,7 +45,7 @@ def getApprox(inBand,inGain,outBand,outGain, outLabel=None, outColour=None, inLa
     plt.plot(outBand,outGain,"o", color=outColour)
 
 getApprox(bandData1,gainData1,availableBands1,approxGain1,"7-band approximation","tab:orange","AutoEq preset","tab:blue")
-# getApprox(bandData2,gainData2,availableBands2,approxGain2,"10-band mimic of 7-band","tab:green",plotInput=0)
+# getApprox(bandData2,gainData2,availableBands2,approxGain2,"10-band mimic of 7-band","tab:green", plotInput=0)
 plt.xscale("log")
 graphs.setGrid("Center frequency / Hz","Gain / dB","EQ")
 plt.show()
