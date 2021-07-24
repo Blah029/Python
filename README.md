@@ -1,6 +1,9 @@
 # Python
 A couple of modules with some useful functions, and other python code.
 
+- misc
+  - eqApproximator </br>
+    Approximate a given EQ preset with different frequency bands.
 - modules
   - myMath </br>
     Simple mathematical functions to find fractions, prime numbers, LCM, etc.
