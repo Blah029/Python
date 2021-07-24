@@ -1,3 +1,5 @@
+# import sys
+# sys.path.append("C:\\Users\\toran\\Documents\\Python\\modules")
 import graphs #from https://github.com/Blah029/python/blob/main/modules/graphs.py 
 import math
 import numpy as np
@@ -13,7 +15,7 @@ gainData1 = np.array([6.5,1.8,-9.9,7.5,-13.0,-1.3,1.3,-0.7,-1.7,1.4]) #autoeq at
 
 # center frequencies of the required bands
 availableBands1 = np.array([60,150,400,1000,3000,8000,16000]) #samsung eq
-# availableBands2 = np.array([31,62,125,250,500,1000,2000,4000,8000,16000])
+# availableBands2 = np.array([32,64,125,250,500,1000,2000,4000,8000,16000])
 
 # calculated gains for approximation
 approxGain1 = np.zeros(len(availableBands1))
@@ -46,7 +48,15 @@ def getApprox(inBand,inGain,outBand,outGain, outLabel=None, outColour=None, inLa
         plt.plot(outBand,outGain,"o", color=outColour)
 
 getApprox(bandData1,gainData1,availableBands1,approxGain1,"7-band approximation","tab:orange","AutoEq preset","tab:blue")
-# getApprox(bandData2,gainData2,availableBands2,approxGain2,"10-band mimic of 7-band","tab:green", plotInput=0)
+# getApprox(bandData2,gainData2,availableBands2,approxGain2,"10-band mimic of 7-band","tab:green", plotInput=0, plotOutput=0)
+# adjustedGains = approxGain2.copy()
+# adjustedGains[2] = -4.5
+# adjustedGains[3] = -6.2
+# adjustedGains[4] = -5.7
+# adjustedGains[6] = -0.2
+# adjustedGains[7] = -0.2
+# plt.plot(availableBands2,adjustedGains, label="Adjusted mimic", color="tab:purple")
+# plt.plot(availableBands2,adjustedGains,"o", color="tab:purple")
 plt.xscale("log")
 graphs.setGrid("Center frequency / Hz","Gain / dB","EQ")
 plt.show()
