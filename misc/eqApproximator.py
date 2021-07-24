@@ -19,7 +19,7 @@ availableBands1 = np.array([60,150,400,1000,3000,8000,16000]) #samsung eq
 approxGain1 = np.zeros(len(availableBands1))
 # approxGain2 = np.zeros(len(availableBands2))
 
-def getApprox(inBand,inGain,outBand,outGain, outLabel=None, outColour=None, inLabel=None, inColour=None, plotInput=True):
+def getApprox(inBand,inGain,outBand,outGain, outLabel=None, outColour=None, inLabel=None, inColour=None, plotInput=True, plotOutput=True):
     print("     Band     Gain")
     
     for i in range(len(outBand)):
@@ -41,8 +41,9 @@ def getApprox(inBand,inGain,outBand,outGain, outLabel=None, outColour=None, inLa
         plt.plot(inBand,inGain,label=inLabel, color=inColour)
         plt.plot(inBand,inGain,"o", color=inColour)
 
-    plt.plot(outBand,outGain,label=outLabel, color=outColour)
-    plt.plot(outBand,outGain,"o", color=outColour)
+    if plotOutput:
+        plt.plot(outBand,outGain,label=outLabel, color=outColour)
+        plt.plot(outBand,outGain,"o", color=outColour)
 
 getApprox(bandData1,gainData1,availableBands1,approxGain1,"7-band approximation","tab:orange","AutoEq preset","tab:blue")
 # getApprox(bandData2,gainData2,availableBands2,approxGain2,"10-band mimic of 7-band","tab:green", plotInput=0)
