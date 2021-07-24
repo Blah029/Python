@@ -3,11 +3,11 @@ import math
 import numpy as np
 import matplotlib.pyplot as plt
 
-# center frecencies of the 10-band preset
+# center frecencies of the preset
 bandData = np.array([31,62,125,250,500,1000,2000,4000,8000,16000])
-# gain corresponding to each band of the preset
+# gains corresponding to each band of the preset
 gainData = np.array([6.5,1.8,-9.9,7.5,-13.0,-1.3,1.3,-0.7,-1.7,1.4])
-# center frequencies of the band available on the new EQ
+# center frequencies of the required bands
 availableBands = np.array([60,150,400,1000,3000,8000,16000])
 approxGain = np.zeros(len(availableBands))
 print(" Band     Gain")
