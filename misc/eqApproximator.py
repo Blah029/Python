@@ -27,7 +27,6 @@ for i in range(len(availableBands)):
             print("%5.0f"%availableBands[i],"Hz","%5.0f"%approxGain[i],"dB")
             break
 
-
 plt.plot(bandData,gainData,label="{}-band preset".format(len(bandData)), color="tab:blue")
 plt.plot(bandData,gainData,"o", color="tab:blue")
 plt.plot(availableBands,approxGain, label="{}-band approximation".format(len(availableBands)), color="tab:orange")
