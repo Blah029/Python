@@ -22,8 +22,6 @@ for i in range(len(availableBands)):
             break
         
         elif (bandData[j] > availableBands[i]):
-            # m,c = np.polyfit(np.array([bandData[j-1],bandData[j]]),np.array([gainData[j-1],gainData[j]]),1)
-            # approxGain[i] = m*availableBands[i] + c
             m,c = np.polyfit(np.array([math.log(bandData[j-1]),math.log(bandData[j])]),np.array([gainData[j-1],gainData[j]]),1)
             approxGain[i] = m*math.log(availableBands[i]) + c
             print("%5.0f"%availableBands[i],"Hz","%5.0f"%approxGain[i],"dB")
