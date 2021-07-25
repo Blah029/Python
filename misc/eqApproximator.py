@@ -1,5 +1,5 @@
-# import sys
-# sys.path.append("C:\\Users\\toran\\Documents\\Python\\modules")
+#import sys
+sys.path.#append("C:\\Users\\toran\\Documents\\Python\\modules")
 import graphs #from https://github.com/Blah029/python/blob/main/modules/graphs.py 
 import math
 import numpy as np
@@ -37,13 +37,19 @@ def getApprox(inBand,inGain,outBand,outGain, outLabel=None, outColour=None, inLa
 
     for i in range(len(outBand)):
         print(i,"%5.0f"%outBand[i],"Hz","%5.1f"%outGain[i],"dB") #why does this need a separate for loop?
-            
+
     if plotInput:
-        plt.plot(xAxis,yFitted,label=inLabel, color=inColour)
+        plt.plot(xAxis,yFitted, label="Model calculated from preset", color=inColour)
+        plt.plot(inBand,inGain,label=inLabel, color=inColour, alpha=0.5, linestyle="dashed")
         plt.plot(inBand,inGain,"o", color=inColour)
 
     if plotOutput:
-        plt.plot(outBand,outGain,label=outLabel, color=outColour)
+        plt.plot(outBand,outGain,label=outLabel, color=outColour, alpha=0.5, linestyle="dashed")
+
+    if plotInput:
+        plt.plot(inBand,inGain,"o", color=inColour)
+
+    if plotOutput:
         plt.plot(outBand,outGain,"o", color=outColour)
 
 # getApprox(bandData1,gainData1,availableBands1,approxGain1,"7-band approximation","tab:orange","AutoEq preset","tab:blue",9)
