@@ -56,5 +56,5 @@ def getApprox(inBand,inGain,outBand,outGain, outLabel=None, outColour=None, inLa
 # getApprox(bandData2,gainData2,availableBands2,approxGain2,"10-band mimic of 7-band","tab:orange","7-band EQ","tab:blue",7)
 getApprox(bandData1,gainData3,availableBands1,approxGain3,"7-band approximation","tab:orange","10-band preset","tab:blue",9)
 plt.xscale("log")
-graphs.setGrid("Center frequency / Hz","Gain / dB","EQ")
+graphs.setGrid("Frequency band / Hz","Gain / dB","EQ")
 plt.show()
