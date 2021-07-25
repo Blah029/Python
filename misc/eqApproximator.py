@@ -24,7 +24,7 @@ approxGain2 = np.zeros(len(availableBands2))
 approxGain3 = np.zeros(len(availableBands1))
 
 def getApprox(inBand,inGain,outBand,outGain, outLabel=None, outColour=None, inLabel=None, inColour=None, degree=9, plotInput=True, plotOutput=True):
-    print("     Band     Gain")
+    print("   Band     Gain")
     
     for i in range(len(outBand)):
         f = np.polyfit(np.log(inBand),inGain,degree)
