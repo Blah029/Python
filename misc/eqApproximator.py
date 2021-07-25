@@ -35,7 +35,8 @@ def getApprox(inBand,inGain,outBand,outGain, outLabel=None, outColour=None, inLa
             yFitted += f[-k-1]*np.log(xAxis)**k
             outGain += (f[-k-1]*np.log(outBand)**k)/len(outBand) #why tf does it need to be divided?
 
-        print(i,"%5.0f"%outBand[i],"Hz","%5.1f"%outGain[i],"dB")
+    for i in range(len(outBand)):
+        print(i,"%5.0f"%outBand[i],"Hz","%5.1f"%outGain[i],"dB") #why does this need a separate for loop?
             
     if plotInput:
         plt.plot(xAxis,yFitted,label=inLabel, color=inColour)
