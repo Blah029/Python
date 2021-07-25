@@ -1,7 +1,6 @@
 # import sys
 # sys.path.append("C:\\Users\\toran\\Documents\\Python\\modules")
 import graphs #from https://github.com/Blah029/python/blob/main/modules/graphs.py 
-import math
 import numpy as np
 import matplotlib.pyplot as plt
 
