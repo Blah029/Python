@@ -23,7 +23,7 @@ approxGain1 = np.zeros(len(availableBands1))
 approxGain2 = np.zeros(len(availableBands2))
 approxGain3 = np.zeros(len(availableBands1))
 
-def getApprox(inBand,inGain,outBand,outGain, outLabel=None, outColour=None, inLabel=None, inColour=None, degree=9, plotInput=True, plotOutput=True):
+def getApprox(inBand,outBand,inGain,outGain, inLabel=None, outLabel=None, degree=9, inColour="tab:blue", outColour="tab:orange", plotInput=True, plotOutput=True):
     print("   Band     Gain")
     
     for i in range(len(outBand)):
@@ -52,9 +52,9 @@ def getApprox(inBand,inGain,outBand,outGain, outLabel=None, outColour=None, inLa
     if plotOutput:
         plt.plot(outBand,outGain,"o", color=outColour)
 
-# getApprox(bandData1,gainData1,availableBands1,approxGain1,"7-band approximation","tab:orange","AutoEq preset","tab:blue",9)
-# getApprox(bandData2,gainData2,availableBands2,approxGain2,"10-band mimic of 7-band","tab:orange","7-band EQ","tab:blue",7)
-getApprox(bandData1,gainData3,availableBands1,approxGain3,"7-band approximation","tab:orange","10-band preset","tab:blue",9)
+# getApprox(bandData1,availableBands1,gainData1,approxGain1,"AutoEq 10-band preset","7-band approximation",9)
+# getApprox(bandData2,availableBands2,gainData2,approxGain2,"7-band phone EQ","10-band mimic",7)
+getApprox(bandData1,availableBands1,gainData3,approxGain3,"AutoEq 10-band preset","7-band approximation",9)
 plt.xscale("log")
 graphs.setGrid("Frequency band / Hz","Gain / dB","EQ")
 plt.show()
