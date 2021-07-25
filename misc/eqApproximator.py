@@ -5,17 +5,17 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 # center frecencies of the preset
-bandData1 = np.array([31,62,125,250,500,1000,2000,4000,8000,16000]) #10-band eq
+bandData1 = np.array([31,62,125,250,500,1000,2000,4000,8000,16000]) #autoeq 10-band
 bandData2 = np.array([31,60,150,400,1000,3000,8000,16000])
 
 # center frequencies of the required bands
-availableBands1 = np.array([60,150,400,1000,3000,8000,16000]) #samsung eq
-availableBands2 = np.array([32,64,125,250,500,1000,2000,4000,8000,16000])
+availableBands1 = np.array([60,150,400,1000,3000,8000,16000]) #samsung eq 7-band
+availableBands2 = np.array([32,64,125,250,500,1000,2000,4000,8000,16000]) #hp eq 10-band
 
 # gains corresponding to each band of the preset
 gainData1 = np.array([6.5,1.8,-9.9,7.5,-13.0,-1.3,1.3,-0.7,-1.7,1.4]) #autoeq ath-ck1 parametric eq gains
-gainData2 = np.array([6.5,2,-5.3,-6.4,-1.3,0.1,-1.7,1.4])
-gainData3 = np.array([8.6,-1.2,-6.5,-6.1,-4.5,-1.7,5.1,6.9,-0.2,-11.6])
+gainData2 = np.array([6.5,2,-5.3,-6.4,-1.3,0.1,-1.7,1.4]) #autoeq ath-ck1 parametric eq gains coverted to samsung 7-band
+gainData3 = np.array([8.6,-1.2,-6.5,-6.1,-4.5,-1.7,5.1,6.9,-0.2,-11.6]) #autoeg beoplay a1 10-band
 
 # calculated gains
 approxGain1 = np.zeros(len(availableBands1))
