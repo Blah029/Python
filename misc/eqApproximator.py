@@ -39,7 +39,7 @@ def getApprox(inBand,inGain,outBand,outGain, outLabel=None, outColour=None, inLa
         print(i,"%5.0f"%outBand[i],"Hz","%5.1f"%outGain[i],"dB") #why does this need a separate for loop?
 
     if plotInput:
-        plt.plot(xAxis,yFitted, label="Model calculated from preset", color=inColour)
+        plt.plot(xAxis,yFitted, label="Calculated model", color=inColour)
         plt.plot(inBand,inGain,label=inLabel, color=inColour, alpha=0.5, linestyle="dashed")
         plt.plot(inBand,inGain,"o", color=inColour)
 
