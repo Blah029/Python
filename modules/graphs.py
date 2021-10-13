@@ -35,16 +35,25 @@ def pointLabels(x,y):
 def plotPoints(x,y, plotColour=None):
     plt.plot(x,y,"o", color=plotColour)
 
-def plotBestFit(x,y, degree=1, plotLabel=None, plotColour="tab:blue"):
-    """Plots the best fit curve of given degree to fit given numpy arrays"""
+def plotBestFitPoly(x,y, degree=1, plotLabel=None, plotColour="tab:blue"):
+    """Plots the best fiting polynomial curve of given degree to fit given numpy arrays"""
     
-    for i in range(len(x)):
-        f = np.polyfit(x,y,degree)
-        xAxis = np.linspace(x[0],x[-1],(x[-1]-x[0]+1)*100)
-        yFitted = np.zeros(len(xAxis))
-        
-        for k in range(degree+1):
-            yFitted += f[-k-1]*xAxis**k
+    coefficients = np.polyfit(x,y,degree)
+    xAxis = np.linspace(x[0],x[-1],(x[-1]-x[0]+1)*100)
+    yFitted = np.zeros(len(xAxis))
+    
+    for i in range(degree+1):
+        yFitted += coefficients[-i-1]*xAxis**i
+
+    plt.plot(xAxis,yFitted, label=plotLabel, color=plotColour)
+    plt.plot(x,y,"o", color=plotColour)
+
+def plotBestFitLog(x,y, plotLabel=None, plotColour="tab:blue"):
+    """Plots the best fiting polynomial curve of given degree to fit given numpy arrays"""
+    
+    coefficients = np.polyfit(np.log(x),y,1)
+    xAxis = np.linspace(x[0],x[-1],(x[-1]-x[0]+1)*100)
+    yFitted = coefficients[0]*np.log(xAxis) + coefficients[1]
 
     plt.plot(xAxis,yFitted, label=plotLabel, color=plotColour)
     plt.plot(x,y,"o", color=plotColour)
