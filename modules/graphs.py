@@ -35,14 +35,16 @@ def pointLabels(x,y):
 def plotPoints(x,y, plotColour=None):
     plt.plot(x,y,"o", color=plotColour)
 
-def plotBestFit(x,y, matchY=False, degree=1, plotLabel=None, plotColour="tab:blue"):
+def plotBestFit(x,y, degree=1, plotLabel=None, plotColour="tab:blue"):
     """Plots the best fit curve of given degree to fit given numpy arrays"""
-    m,c = np.polyfit(x,y,degree)
+    
+    for i in range(len(x)):
+        f = np.polyfit(x,y,degree)
+        xAxis = np.linspace(x[0],x[-1],(x[-1]-x[0]+1)*100)
+        yFitted = np.zeros(len(xAxis))
+        
+        for k in range(degree+1):
+            yFitted += f[-k-1]*xAxis**k
+
+    plt.plot(xAxis,yFitted, label=plotLabel, color=plotColour)
     plt.plot(x,y,"o", color=plotColour)
-    
-    if (matchY):
-        extrapolatedX=(np.array([y[0],y[-1]])-c)/m
-        plt.plot(extrapolatedX,m*extrapolatedX+c, label=plotLabel, color=plotColour)
-    
-    else:
-        plt.plot(x,m*x+c, label=plotLabel, color=plotColour)
