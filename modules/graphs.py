@@ -4,7 +4,13 @@ import matplotlib.pyplot as plt
 """
 figure template
 
-plt.figure(_int_)
+fig, ax = plt.subplots(_int_)
+ax.set_xscale(_string_)
+ax.set_yscale(_string_)
+ax.set_xlim(_int_,_int_)
+ax.set_ylim(_int_,_int_)
+
+# replace plt with ax[_int_] for subplots
 plt.plot(_array_,_array_, label=_string_, color=_string_)
 plt.xlabel(_string_)
 plt.ylabel(_string_)
