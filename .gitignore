@@ -1,0 +1,9 @@
+# VSCode files
+**__pycache__
+**tempCodeRunnerFile.py
+
+# Python files & folders
+contests/
+hackerRank/
+uniMisc/
+*.py

@@ -1,5 +1,5 @@
 import sys
-sys.path.append(open("_modulePath.txt").read())
+sys.path.append("D:\\User Files\\Documents\\Python\\modules")
 from datetime import datetime
 # improt modules here
 

@@ -87,7 +87,7 @@ def lcm(numbers):
                 if b.count(c) > occur[c]:
                     occur[c] = b.count(c)
         for d in occur:
-            answer* = d**occur[d]
+            answer = d**occur[d]
 
         return answer
 
