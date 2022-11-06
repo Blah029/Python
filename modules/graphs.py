@@ -22,15 +22,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
-def pointLabels(x,y, xOffset=None, yOffset=None):
-    """Plot data points"""
-    if yOffset == None:
-        yOffset = xOffset
-    for i, j in zip(x,y):
-        plt.text(i+xOffset, j+yOffset,("({:.0f},{:.0f})".format(i,j)),
-                 backgroundcolor="white", alpha=0.5)
-
-
 def plotPoints(x,y, colour=None, size=None, label=None):
     """Plot scatter graph"""
     plt.plot(x,y,".", color=colour, markersize=size, label=label)
@@ -65,6 +56,15 @@ def plotBestFitLog(x,y, plotLabel=None, plotColour="tab:blue"):
     plt.plot(x,y,"o", color=plotColour)
 
 
+def pointLabels(x,y, xOffset=None, yOffset=None):
+    """Plot data points"""
+    if yOffset == None:
+        yOffset = xOffset
+    for i, j in zip(x,y):
+        plt.text(i+xOffset, j+yOffset,("({:.0f},{:.0f})".format(i,j)),
+                 backgroundcolor="white", alpha=0.5)
+
+
 def setGrid(xLabel=None, yLabel=None, title=None):
     """Configure axis labels, title and other roperties"""
     plt.xlabel(xLabel)
@@ -82,12 +82,12 @@ def test():
     t = np.linspace(0,1,fs*5+1)
     x_t = np.cos(2*np.pi*1*t)
 
-    pointLabels(t,x_t,0.025,0)
     plotPoints(t,x_t,"red",10,"plotPoints")
     plotLine(t,x_t,"green","plotLine")
     plotBestFitPoly(t,x_t,4,"plotBestFitPoly","black")
     plotBestFitLog(np.array([1,2,3]),np.array([1,1.1,1.11]),
                           "plotBestFitLog","yellow")
+    pointLabels(t,x_t,0.025,0)
     setGrid("time","magnitude","test plot")
     plt.show()
 
