@@ -22,17 +22,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
-def setGrid(xLabel=None, yLabel=None, title=None):
-    """Configure axis labels, title and other roperties"""
-    plt.xlabel(xLabel)
-    plt.ylabel(yLabel)
-    plt.title(title)
-    plt.legend()
-    plt.grid()
-    plt.grid(which="minor", alpha=0.25)
-    plt.minorticks_on()
-
-
 def pointLabels(x,y):
     """Plot data points"""
     for i, j in zip(x, y):
@@ -40,9 +29,14 @@ def pointLabels(x,y):
                  backgroundcolor="white", alpha=0.5)
 
 
-def plotPoints(x,y, colour=None, size=None):
-    """Mark points on the graph"""
-    plt.plot(x,y,".", color=colour, markersize=size)
+def plotPoints(x,y, colour=None, size=None, label=None):
+    """Plot scatter graph"""
+    plt.plot(x,y,".", color=colour, markersize=size, label=label)
+
+
+def plotLine(x,y, colour=None, label=None):
+    """Plot line graph"""
+    plt.plot(x,y,"-", color=colour, label=label)
 
 
 def plotBestFitPoly(x,y, degree=1, plotLabel=None, plotColour="tab:blue"):
@@ -67,3 +61,14 @@ def plotBestFitLog(x,y, plotLabel=None, plotColour="tab:blue"):
 
     plt.plot(xAxis,yFitted, label=plotLabel, color=plotColour)
     plt.plot(x,y,"o", color=plotColour)
+
+
+def setGrid(xLabel=None, yLabel=None, title=None):
+    """Configure axis labels, title and other roperties"""
+    plt.xlabel(xLabel)
+    plt.ylabel(yLabel)
+    plt.title(title)
+    plt.legend()
+    plt.grid()
+    plt.grid(which="minor", alpha=0.25)
+    plt.minorticks_on()
