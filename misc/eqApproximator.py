@@ -1,5 +1,5 @@
 import sys
-sys.path.append("D:\\User Files\\Documents\\Python\\_modules")
+sys.path.append("D:\\User Files\\Documents\\Python\\modules")
 import graphs #from https://github.com/Blah029/python/blob/main/modules/graphs.py 
 import numpy as np
 import matplotlib.pyplot as plt
