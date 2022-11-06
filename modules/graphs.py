@@ -32,7 +32,7 @@ def plotLine(x,y, colour=None, label=None):
     plt.plot(x,y,"-", color=colour, label=label)
 
 
-def plotBestFitPoly(x,y, degree=1, plotLabel=None, plotColour="tab:blue"):
+def plotBestFitPoly(x,y, degree=1, label=None, plotColour="tab:blue"):
     """Plot the best fiting polynomial curve of given degree to fit 
     given numpy arrays"""
     coefficients = np.polyfit(x,y,degree)
@@ -41,18 +41,18 @@ def plotBestFitPoly(x,y, degree=1, plotLabel=None, plotColour="tab:blue"):
     for i in range(degree+1):
         yFitted += coefficients[-i-1]*xAxis**i
 
-    plt.plot(xAxis,yFitted, label=plotLabel, color=plotColour)
+    plt.plot(xAxis,yFitted, label=label, color=plotColour)
     plt.plot(x,y,"o", color=plotColour)
 
 
-def plotBestFitLog(x,y, plotLabel=None, plotColour="tab:blue"):
+def plotBestFitLog(x,y, label=None, plotColour="tab:blue"):
     """Plot the best fiting loarithmic curve to fit 
     given numpy arrays"""
     coefficients = np.polyfit(np.log(x),y,1)
     xAxis = np.linspace(x[0],x[-1],(x[-1]-x[0]+1)*100)
     yFitted = coefficients[0]*np.log(xAxis) + coefficients[1]
 
-    plt.plot(xAxis,yFitted, label=plotLabel, color=plotColour)
+    plt.plot(xAxis,yFitted, label=label, color=plotColour)
     plt.plot(x,y,"o", color=plotColour)
 
 
@@ -65,18 +65,39 @@ def pointLabels(x,y, xOffset=None, yOffset=None):
                  backgroundcolor="white", alpha=0.5)
 
 
-def setGrid(xLabel=None, yLabel=None, title=None):
-    """Configure axis labels, title and other roperties"""
+def setGrid(xLabel=None, yLabel=None, title=None, xscale=None, yscale=None):
+    """Configure axis labels, title and other properties"""
     plt.xlabel(xLabel)
     plt.ylabel(yLabel)
     plt.title(title)
+    if xscale != None:
+        plt.xscale(xscale)
+    if yscale != None:
+        plt.yscale(yscale)
     plt.legend()
     plt.grid()
     plt.grid(which="minor", alpha=0.25)
     plt.minorticks_on()
 
 
-def test():
+def setSubGrid(axis=None, xLabel=None, yLable=None, xscale=None, 
+               yscale=None, title=None):
+    """Configure axis labels, title and other properties of a subplot"""
+    axis.set_xlabel(xLabel)
+    axis.set_ylabel(yLable)
+    if axis.get_title() == "":
+        axis.set_title(title)
+    if xscale != None:
+        axis.set_xscale(xscale)
+    if yscale != None:
+        axis.set_yscale(yscale)
+    axis.legend()
+    axis.grid()
+    axis.grid(which="minor",alpha=0.25)
+    axis.minorticks_on()
+    
+
+def testPlot():
     """testing graphs.py"""
     fs = 5
     t = np.linspace(0,1,fs*5+1)
@@ -88,9 +109,39 @@ def test():
     plotBestFitLog(np.array([1,2,3]),np.array([1,1.1,1.11]),
                           "plotBestFitLog","yellow")
     pointLabels(t,x_t,0.025,0)
-    setGrid("time","magnitude","test plot")
+    setGrid("time","magnitude","test plot","log","log")
+    plt.show()
+
+
+def testSubplot():
+    # Section 1 - Multplier Modulator/Demodulator
+    # 1. Generate m(t)
+    fm = 15000
+    fc = 250000
+    fs = 750000*10
+    duration = 1/fm*4
+    t = np.linspace(0,duration,int(fs*duration+1))
+    m_t = 0.5*np.cos(2*np.pi*fm*t)
+    # 2. Multiply with carrier
+    # c_t = np.cos(2*np.pi*fc*t)
+    c_t = np.cos(2*np.pi*fc*t)
+    x_t = m_t*c_t
+
+    # Frequency domain
+    fig, ax = plt.subplots(2)
+    ax[0].magnitude_spectrum(m_t, Fs=fs, label="m(t)")
+    ax[0].set_title("Modulator Output Frequency Spectrum")
+    ax[1].magnitude_spectrum(c_t, Fs=fs, label="c(t)")
+    # ax[1].set_title("Demodulator Output Frequency Spectrum")
+    for axis in ax:
+        # axis.set_xscale("log")
+        setSubGrid(axis,"f /kHz","Magnitude","log", title="Common Title")
+        axis.set_xticks([1e4,1e5,1e6])
+        axis.set_xticklabels([10,100,100])
+    fig.tight_layout()
     plt.show()
 
 
 if __name__ == "__main__":
-    test()
+    testPlot()
+    # testSubplot()
