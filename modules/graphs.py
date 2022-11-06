@@ -1,6 +1,6 @@
-"""Tools for plotting graphs with pyplot
+"""Tools for plotting graphs with pyplot"""
 
-figure template
+"""figure template
 # Configure axes
 fig, ax = plt.subplots(_int_)
 ax.set_xscale(_string_)
