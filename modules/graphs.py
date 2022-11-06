@@ -22,10 +22,12 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
-def pointLabels(x,y):
+def pointLabels(x,y, xOffset=None, yOffset=None):
     """Plot data points"""
-    for i, j in zip(x, y):
-        plt.text(i, j+1,("({:.0f},{:.0f})".format(i,j)),
+    if yOffset == None:
+        yOffset = xOffset
+    for i, j in zip(x,y):
+        plt.text(i+xOffset, j+yOffset,("({:.0f},{:.0f})".format(i,j)),
                  backgroundcolor="white", alpha=0.5)
 
 
@@ -43,7 +45,7 @@ def plotBestFitPoly(x,y, degree=1, plotLabel=None, plotColour="tab:blue"):
     """Plot the best fiting polynomial curve of given degree to fit 
     given numpy arrays"""
     coefficients = np.polyfit(x,y,degree)
-    xAxis = np.linspace(x[0],x[-1],(x[-1]-x[0]+1)*100)
+    xAxis = np.linspace(x[0],x[-1],int((x[-1]-x[0]+1)*100))
     yFitted = np.zeros(len(xAxis))    
     for i in range(degree+1):
         yFitted += coefficients[-i-1]*xAxis**i
@@ -53,7 +55,7 @@ def plotBestFitPoly(x,y, degree=1, plotLabel=None, plotColour="tab:blue"):
 
 
 def plotBestFitLog(x,y, plotLabel=None, plotColour="tab:blue"):
-    """Plot the best fiting polynomial curve of given degree to fit 
+    """Plot the best fiting loarithmic curve to fit 
     given numpy arrays"""
     coefficients = np.polyfit(np.log(x),y,1)
     xAxis = np.linspace(x[0],x[-1],(x[-1]-x[0]+1)*100)
@@ -72,3 +74,24 @@ def setGrid(xLabel=None, yLabel=None, title=None):
     plt.grid()
     plt.grid(which="minor", alpha=0.25)
     plt.minorticks_on()
+
+
+def test():
+    """testing graphs.py"""
+    fs = 5
+    t = np.linspace(0,1,fs*5+1)
+    x_t = np.cos(2*np.pi*1*t)
+
+    pointLabels(t,x_t,0.025,0)
+    plotPoints(t,x_t,"red",10,"plotPoints")
+    plotLine(t,x_t,"green","plotLine")
+    plotBestFitPoly(t,x_t,4,"plotBestFitPoly","black")
+    plotBestFitLog(np.array([1,2,3]),np.array([1,1.1,1.11]),
+                          "plotBestFitLog","yellow")
+    setGrid("time","magnitude","test plot")
+
+    plt.show()
+
+
+if __name__ == "__main__":
+    test()
