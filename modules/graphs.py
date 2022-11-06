@@ -1,13 +1,13 @@
 """Tools for plotting graphs with pyplot"""
 
 """figure template
-# Configure axes
+# WIth subplots
 fig, ax = plt.subplots(_int_)
 ax.set_xscale(_string_)
 ax.set_yscale(_string_)
 ax.set_xlim(_int_,_int_)
 ax.set_ylim(_int_,_int_)
-# Plot. Replace plt with ax[_int_] for subplots.
+# Without subplots
 plt.plot(_array_,_array_, label=_string_, color=_string_)
 plt.xlabel(_string_)
 plt.ylabel(_string_)
@@ -89,7 +89,6 @@ def test():
     plotBestFitLog(np.array([1,2,3]),np.array([1,1.1,1.11]),
                           "plotBestFitLog","yellow")
     setGrid("time","magnitude","test plot")
-
     plt.show()
 
 
