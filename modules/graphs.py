@@ -40,13 +40,14 @@ def pointLabels(x,y):
                  backgroundcolor="white", alpha=0.5)
 
 
-def plotPoints(x,y, plotColour=None):
+def plotPoints(x,y, colour=None, size=None):
     """Mark points on the graph"""
-    plt.plot(x,y,"o", color=plotColour)
+    plt.plot(x,y,".", color=colour, markersize=size)
 
 
 def plotBestFitPoly(x,y, degree=1, plotLabel=None, plotColour="tab:blue"):
-    """Plot the best fiting polynomial curve of given degree to fit given numpy arrays"""
+    """Plot the best fiting polynomial curve of given degree to fit 
+    given numpy arrays"""
     coefficients = np.polyfit(x,y,degree)
     xAxis = np.linspace(x[0],x[-1],(x[-1]-x[0]+1)*100)
     yFitted = np.zeros(len(xAxis))    
@@ -58,7 +59,8 @@ def plotBestFitPoly(x,y, degree=1, plotLabel=None, plotColour="tab:blue"):
 
 
 def plotBestFitLog(x,y, plotLabel=None, plotColour="tab:blue"):
-    """Plot the best fiting polynomial curve of given degree to fit given numpy arrays"""
+    """Plot the best fiting polynomial curve of given degree to fit 
+    given numpy arrays"""
     coefficients = np.polyfit(np.log(x),y,1)
     xAxis = np.linspace(x[0],x[-1],(x[-1]-x[0]+1)*100)
     yFitted = coefficients[0]*np.log(xAxis) + coefficients[1]
