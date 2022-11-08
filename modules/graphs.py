@@ -22,14 +22,21 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
-def plotPoints(x,y, colour=None, size=None, label=None):
+def plotPoints(x,y, colour=None, size=None, label=None, axis=None):
     """Plot scatter graph"""
-    plt.plot(x,y,".", color=colour, markersize=size, label=label)
+    if axis == None:
+        plt.plot(x,y,".", color=colour, markersize=size, label=label)
+    else:
+        axis.plot(x,y,".", color=colour, markersize=size, label=label)
 
 
-def plotLine(x,y, colour=None, label=None):
+
+def plotLine(x,y, colour=None, label=None, axis=None):
     """Plot line graph"""
-    plt.plot(x,y,"-", color=colour, label=label)
+    if axis == None:
+        plt.plot(x,y,"-", color=colour, label=label)
+    else:
+        axis.plot(x,y,"-", color=colour, label=label)
 
 
 def plotBestFitPoly(x,y, degree=1, label=None, plotColour="tab:blue"):
@@ -128,13 +135,13 @@ def testSubplot():
     x_t = m_t*c_t
 
     # Frequency domain
-    fig, ax = plt.subplots(2)
+    fig, ax = plt.subplots(4)
     ax[0].magnitude_spectrum(m_t, Fs=fs, label="m(t)")
     ax[0].set_title("Modulator Output Frequency Spectrum")
     ax[1].magnitude_spectrum(c_t, Fs=fs, label="c(t)")
-    # ax[1].set_title("Demodulator Output Frequency Spectrum")
+    plotLine(t,m_t, axis=ax[2])
+    plotPoints(t,m_t, axis=ax[3])
     for axis in ax:
-        # axis.set_xscale("log")
         setSubGrid(axis,"f /kHz","Magnitude","log", title="Common Title")
         axis.set_xticks([1e4,1e5,1e6])
         axis.set_xticklabels([10,100,100])
@@ -144,4 +151,4 @@ def testSubplot():
 
 if __name__ == "__main__":
     testPlot()
-    # testSubplot()
+    testSubplot()
