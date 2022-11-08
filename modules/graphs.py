@@ -139,8 +139,8 @@ def testSubplot():
     ax[0].magnitude_spectrum(m_t, Fs=fs, label="m(t)")
     ax[0].set_title("Modulator Output Frequency Spectrum")
     ax[1].magnitude_spectrum(c_t, Fs=fs, label="c(t)")
-    plotLine(t,m_t, axis=ax[2])
-    plotPoints(t,m_t, axis=ax[3])
+    plotLine(t,m_t,"grey","plotLine",ax[2])
+    plotPoints(t,m_t,"orange",1,"plotPoints",ax[3])
     for axis in ax:
         setSubGrid(axis,"f /kHz","Magnitude","log", title="Common Title")
         axis.set_xticks([1e4,1e5,1e6])
