@@ -20,7 +20,7 @@ for i, j in zip(x,y):
 # print("x weight:  {:12f}    y weight:  {:12f}".format(1/xMax,1/yMax))
 print("x max:     {:12f}    y max:     {:12f}".format(xMax,yMax))
 print("x optimal: {:12f}    y optimal: {:12f}".format(sumX,sumY))
-print("x ratio :  {:12f}    y ratio:   {:12f}".format(sumX/xMax,sumY/yMax))
+print("x ratio:   {:12f}    y ratio:   {:12f}".format(sumX/xMax,sumY/yMax))
 # Calculate optimal through muliplication
 prod = 0
 prodX = 0
@@ -34,6 +34,6 @@ for i, j in zip(x,y):
 # print("x weight:  {:12f}    y weight:  {:12f}".format(1/xMax,1/yMax))
 # print("x max:     {:12f}    y max:     {:12f}".format(xMax,yMax))
 # print("x optimal: {:12f}    y optimal: {:12f}".format(prodX,prodY))
-# print("x ratio :  {:12f}    y ratio:   {:12f}".format(prodX/xMax,prodY/yMax))
+# print("x ratio:   {:12f}    y ratio:   {:12f}".format(prodX/xMax,prodY/yMax))
 if sumX != prodX or sumY != prodY:
     print("\nWARNING: Conflicting results\n")
