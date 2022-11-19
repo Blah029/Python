@@ -1,5 +1,3 @@
-import sys
-sys.path.append("D:\\User Files\\Documents\\Python\\modules")
 import numpy as np
 
 
