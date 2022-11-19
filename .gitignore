@@ -2,9 +2,10 @@
 **__pycache__
 **tempCodeRunnerFile.py
 
-# Python files & folders
+# Folders
 contests/
 hackerRank/
 uniMisc/
-misc/
-*.py
+
+# Python files in root directory
+/*py
