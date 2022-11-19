@@ -16,7 +16,7 @@ for i, j in zip(x,y):
         sum = i/xMax + j/yMax
         sumX = i
         sumY = j
-print("sum")
+# print("sum")
 # print("x weight:  {:12f}    y weight:  {:12f}".format(1/xMax,1/yMax))
 print("x max:     {:12f}    y max:     {:12f}".format(xMax,yMax))
 print("x optimal: {:12f}    y optimal: {:12f}".format(sumX,sumY))
@@ -30,8 +30,10 @@ for i, j in zip(x,y):
         prod = i*j
         prodX = i
         prodY = j
-print("prod")
+# print("prod")
 # print("x weight:  {:12f}    y weight:  {:12f}".format(1/xMax,1/yMax))
-print("x max:     {:12f}    y max:     {:12f}".format(xMax,yMax))
-print("x optimal: {:12f}    y optimal: {:12f}".format(prodX,prodY))
-print("x ratio :  {:12f}    y ratio:   {:12f}".format(prodX/xMax,prodY/yMax))
+# print("x max:     {:12f}    y max:     {:12f}".format(xMax,yMax))
+# print("x optimal: {:12f}    y optimal: {:12f}".format(prodX,prodY))
+# print("x ratio :  {:12f}    y ratio:   {:12f}".format(prodX/xMax,prodY/yMax))
+if sumX != prodX or sumY != prodY:
+    print("\nWARNING: Conflicting results\n")
