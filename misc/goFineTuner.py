@@ -2,6 +2,7 @@ import numpy as np
 
 # From GO
 data = np.array()
+xMin = 0
 yMin = 0
 
 x, y = data[:,0], data[:,1]
@@ -11,7 +12,7 @@ prod = 0
 prodX = 0
 prodY = 0
 for i, j in zip(x,y):
-    if i*j > prod and j > yMin+0.0000009:
+    if i*j > prod and i > xMin+0.0000009 and j > yMin+0.0000009:
         prod = i*j
         prodX = i
         prodY = j
