@@ -1,5 +1,6 @@
 import numpy as np
 
+
 # From GO
 data = np.array()
 xMin = 0
