@@ -14,7 +14,7 @@ def calculateLeftMargin(width, height):
 
 
 def main():
-    print(calculateLeftMargin(3,4))
+    print(calculateLeftMargin(4,3))
 
 
 if __name__ == "__main__":
