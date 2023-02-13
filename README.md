@@ -15,3 +15,5 @@ A couple of modules with some useful functions, and other python code.
     For plotting graphs with numpy and matplotlib.
 - projectEuler </br>
   Solutions for attempted Project Euler problems.
+- uniMisc </br>
+  Code written for course content.
