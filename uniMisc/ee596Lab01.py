@@ -109,6 +109,7 @@ def decodeBitstream(bitstream,codebook,dimensions):
             # logger.debug(f"decodeBitstream: {receivedBits} not in inverseCodebook")
             pass
     decodedArray = np.array(symbols)
+    # logger.debug(f"bitstream \n{bitstream}")
     # logger.debug(f"inverse codebook: {inverseCodebook}")
     # logger.debug(f"decoded symbols: {symbols}")
     return decodedArray.reshape(dimensions[0],dimensions[1])
@@ -122,6 +123,7 @@ def steps4to8(pixelArray,label,workingDirectory):
     ySize = np.shape(pixelArray)[1]
     logger.debug(f"size: {xSize}x{ySize}")
     layers = swapChannelLayers(pixelArray)
+    logger.info(f"{label} axes swapped")
     logger.debug(f"crop shape: {np.shape(pixelArray)}")
     logger.debug(f"crop[0] shape: {np.shape(pixelArray[0])}")
     logger.debug(f"crop[0,0] shape: {np.shape(pixelArray[0,0])}")
@@ -137,19 +139,12 @@ def steps4to8(pixelArray,label,workingDirectory):
     bins = np.arange(0,256,256/8)
     logger.debug(f"bins: {bins}")
     quantizedLayers = np.digitize(layers,bins)
-    # logger.debug(f"quantized: \n{quantizedLayers[1].reshape(xSize,ySize)}")
+    logger.info(f"{label} quantized")
     ## Plot and save
-    # plotSave(quantizedLayers[0].reshape(xSize,ySize),
-    #          "Cropped pixelArray layer 1")
-    # plotSave(quantizedLayers[1].reshape(xSize,ySize),
-    #          "Cropped pixelArray layer 2")
-    # plotSave(quantizedLayers[2].reshape(xSize,ySize),
-    #          "Cropped pixelArray layer 3")
     plotSaveLayers(quantizedLayers,f"Quantized {label} image")
 
     ## Step 5 
     ## Find probabilities of each symbol
-    logger.debug(f"uniqe elements: {np.unique(quantizedLayers[1],return_counts=True)}")
     uniqueSymbols_y,counts_y = np.unique(quantizedLayers[0],
                                           return_counts=True)
     uniqueSymbols_cb,counts_cb = np.unique(quantizedLayers[1],
@@ -175,8 +170,8 @@ def steps4to8(pixelArray,label,workingDirectory):
     codebook_y = generateCodebook(probability_y)
     codebook_cb = generateCodebook(probability_cb)
     codebook_cr = generateCodebook(probability_cr)
+    logger.info(f"{label} codebooks generated")
     logger.debug(f"code dictionaries: \n {codebook_y} \n {codebook_cb} \n {codebook_cr}")
-    logger.debug(f"cb symbol {8}, cb mapped codeword: {codebook_cb.get(4)}")
 
     ## Step 7
     ## Compress both original and cropped images
@@ -192,6 +187,7 @@ def steps4to8(pixelArray,label,workingDirectory):
     bitstream_cb = encodeSymbols(symbolStream_cb,codebook_cb)
     bitstream_cr = encodeSymbols(symbolStream_cr,codebook_cr)
     bitstream = "\n".join([bitstream_y,bitstream_cb,bitstream_cr])
+    logger.info(f"{label} encoded")    
 
     ## Step 8
     ## Save the compressed image into a text file
@@ -201,7 +197,7 @@ def steps4to8(pixelArray,label,workingDirectory):
     return bitstream, [codebook_y,codebook_cb,codebook_cr]
 
 
-def step10_1(path):
+def step10_1(path,codebooks,label):
     """Read from a text file and pass data to step10_2 function"""
     ## Read encoded file
     with open(path,"r") as file:
@@ -210,10 +206,11 @@ def step10_1(path):
         bitsream = lines[1:]
         file.close()
         # logger.debug(f"read bitsream: \n{bitsream}")
+    logger.info(f"file read")
 
     ## Step 10
     ## Decompress the outputs
-    step10_2(bitsream,dimensions,croppedCodebooks,"cropped")
+    step10_2(bitsream,dimensions,codebooks,label)
 
 
 def step10_2(encodedData,dimensions,channelCodebooks,label):
@@ -229,6 +226,7 @@ def step10_2(encodedData,dimensions,channelCodebooks,label):
     decodedArray_y = decodeBitstream(readBitStream_y,channelCodebooks[0],dimensions)
     decodedArray_cb = decodeBitstream(readBitStream_cb,channelCodebooks[1],dimensions)
     decodedArray_cr = decodeBitstream(readBitStream_cr,channelCodebooks[2],dimensions)
+    logger.info(f"{label} decoded")
     # logger.debug(f"decoded array: \n{decodedArray_cb}")
     ## Merge channels
     decodedLayers = np.array([decodedArray_y,decodedArray_cb,decodedArray_cr])
@@ -261,13 +259,10 @@ if __name__ == "__main__":
     ## Cropped image
     croppedBitstream, croppedCodebooks = steps4to8(croppedImage,"cropped",workingDirectory)
     ## Original image
-    # originalBitstream, origianlCodebooks = steps4to8(image,"original",workingDirectory)
+    originalBitstream, originalCodebooks = steps4to8(image,"original",workingDirectory)
     
     ## Step 10
     ## Cropped image
-    step10_1(f"{workingDirectory}\\Encoded\\pattern-cropped.txt")
+    step10_1(f"{workingDirectory}\\Encoded\\pattern-cropped.txt",croppedCodebooks,"cropped")
     ## Original image
-    ## Decoding error. Should get 612*612 = 374,544 symbols. 
-    ## Get 688,378 instead.
-    # step10_1(f"{workingDirectory}\\Encoded\\pattern-original.txt")
-    # step10_2(originalBitstream,[612,612],origianlCodebooks,{origianlCodebooks})
+    step10_1(f"{workingDirectory}\\Encoded\\pattern-original.txt",originalCodebooks,"original")
