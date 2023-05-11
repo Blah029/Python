@@ -55,7 +55,6 @@ def generateCodebook(symbolProb):
     """
     symbolCodes = np.zeros(np.shape(symbolProb), dtype="object")
     symbolCodes[:,0] = symbolProb[:,0]
-    # logger.debug(f"inital symbolCodes: \n{symbolCodes}")
     c_carryOver = ""
     for i in range(np.shape(symbolProb)[0] - 1):
         ## Probablities of the symbol under coideration
@@ -77,7 +76,9 @@ def generateCodebook(symbolProb):
         #              cumulative: {p_cumulative} {c_cumulative}")
         symbolCodes[i,1] = c_symbol
         symbolCodes[i+1,1] = c_cumulative
-    logger.debug(f"symbolCodes: \n{symbolCodes}")
+    if np.shape(symbolCodes)[0] == 1:
+        symbolCodes[0,1] = "0"
+    # logger.debug(f"symbolCodes: \n{symbolCodes}")
     return dict(symbolCodes)
 
 
@@ -88,7 +89,8 @@ def encodeSymbols(symbols,codebook):
     codewords = []
     for symbol in symbols:
         codewords.append(codebook.get(symbol))
-    logger.debug(f"codebook: {codebook}")
+    # logger.debug(f"codebook: {codebook}")
+    # logger.debug(f"codewords: {codewords}")
     bitStream = "".join(codewords)
     return bitStream
 
@@ -102,9 +104,13 @@ def decodeBitstream(bitstream,codebook,dimensions):
         if receivedBits in inverseCodebook:
             symbols.append(inverseCodebook.get(receivedBits))
             receivedBits = ""
+            # logger.debug(f"decodeBitstream: {receivedBits} in inverseCodebook")
         else:
+            # logger.debug(f"decodeBitstream: {receivedBits} not in inverseCodebook")
             pass
     decodedArray = np.array(symbols)
+    # logger.debug(f"inverse codebook: {inverseCodebook}")
+    # logger.debug(f"decoded symbols: {symbols}")
     return decodedArray.reshape(dimensions[0],dimensions[1])
 
 
@@ -131,7 +137,7 @@ def steps4to8(pixelArray,label,workingDirectory):
     bins = np.arange(0,256,256/8)
     logger.debug(f"bins: {bins}")
     quantizedLayers = np.digitize(layers,bins)
-    logger.debug(f"quantized: \n{quantizedLayers[1].reshape(xSize,ySize)}")
+    # logger.debug(f"quantized: \n{quantizedLayers[1].reshape(xSize,ySize)}")
     ## Plot and save
     # plotSave(quantizedLayers[0].reshape(xSize,ySize),
     #          "Cropped pixelArray layer 1")
@@ -162,7 +168,7 @@ def steps4to8(pixelArray,label,workingDirectory):
     probability_cb = probability_cb[probability_cb[:, 1].argsort()[::-1]]
     probability_cr = probability_cr[probability_cr[:, 1].argsort()[::-1]]
     encodeTestArray = encodeTestArray[encodeTestArray[:, 1].argsort()[::-1]]
-    logger.debug(f"probabilities: {probability_y} \n{probability_cb} \n{probability_cr}")
+    logger.debug(f"probabilities: \n{probability_y} \n{probability_cb} \n{probability_cr}")
 
     ## Step 6
     ## Construct the Huffamn coding algorith (see line 34)
@@ -178,9 +184,9 @@ def steps4to8(pixelArray,label,workingDirectory):
     symbolStream_y = quantizedLayers[0].reshape(xSize*ySize)
     symbolStream_cb = quantizedLayers[1].reshape(xSize*ySize)
     symbolStream_cr = quantizedLayers[2].reshape(xSize*ySize)
-    logger.debug(f"stream: {symbolStream_y[-xSize:-1]}, matrix: {quantizedLayers[0,xSize-1]}")
-    logger.debug(f"stream: {symbolStream_cb[-xSize:-1]}, matrix: {quantizedLayers[1,xSize-1]}")
-    logger.debug(f"stream: {symbolStream_cr[-xSize:-1]}, matrix: {quantizedLayers[2,xSize-1]}")
+    # logger.debug(f"stream: {symbolStream_y[-xSize:-1]}, matrix: {quantizedLayers[0,xSize-1]}")
+    # logger.debug(f"stream: {symbolStream_cb[-xSize:-1]}, matrix: {quantizedLayers[1,xSize-1]}")
+    # logger.debug(f"stream: {symbolStream_cr[-xSize:-1]}, matrix: {quantizedLayers[2,xSize-1]}")
     ## Map sybols into codewords using the codebook
     bitstream_y = encodeSymbols(symbolStream_y,codebook_y)
     bitstream_cb = encodeSymbols(symbolStream_cb,codebook_cb)
@@ -190,7 +196,6 @@ def steps4to8(pixelArray,label,workingDirectory):
     ## Step 8
     ## Save the compressed image into a text file
     with open(f"{workingDirectory}\\Encoded\\pattern-{label}.txt","w") as file:
-        # file.write(f"{bitstream_y} \n{bitstream_cb} \n{bitstream_cr}")
         file.write(f"{xSize}x{ySize}\n{bitstream}")
         file.close()
     return bitstream, [codebook_y,codebook_cb,codebook_cr]
@@ -204,7 +209,7 @@ def step10_1(path):
         dimensions = list(map(int,lines[0].split("x")))
         bitsream = lines[1:]
         file.close()
-    logger.debug(f"lines: \n{lines}")
+        # logger.debug(f"read bitsream: \n{bitsream}")
 
     ## Step 10
     ## Decompress the outputs
@@ -219,12 +224,12 @@ def step10_2(encodedData,dimensions,channelCodebooks,label):
     readBitStream_y = np.array(list(encodedData[0]))
     readBitStream_cb = np.array(list(encodedData[1]))
     readBitStream_cr = np.array(list(encodedData[2]))
-    logger.debug(f"dimensions: \n{dimensions}")
+    logger.debug(f"step10_2 bitstream sizes: y: {np.size(readBitStream_y)}, cb: {np.size(readBitStream_cb)}, cr: {np.size(readBitStream_cr)}")
     ## Decode bisteams
     decodedArray_y = decodeBitstream(readBitStream_y,channelCodebooks[0],dimensions)
     decodedArray_cb = decodeBitstream(readBitStream_cb,channelCodebooks[1],dimensions)
     decodedArray_cr = decodeBitstream(readBitStream_cr,channelCodebooks[2],dimensions)
-    logger.debug(f"decoded array: \n{decodedArray_cb}")
+    # logger.debug(f"decoded array: \n{decodedArray_cb}")
     ## Merge channels
     decodedLayers = np.array([decodedArray_y,decodedArray_cb,decodedArray_cr])
     decodedImage = swapChannelLayers(decodedLayers)/8
@@ -256,7 +261,7 @@ if __name__ == "__main__":
     ## Cropped image
     croppedBitstream, croppedCodebooks = steps4to8(croppedImage,"cropped",workingDirectory)
     ## Original image
-    originalBitstream, origianlCodebooks = steps4to8(image,"original",workingDirectory)
+    # originalBitstream, origianlCodebooks = steps4to8(image,"original",workingDirectory)
     
     ## Step 10
     ## Cropped image
