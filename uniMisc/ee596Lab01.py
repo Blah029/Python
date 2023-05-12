@@ -25,8 +25,7 @@ def swapChannelLayers(pixelArray):
     return swappedImage
 
 
-
-def plotSave(pixelArray,name):
+def plotSave(pixelArray, name=None):
     """Plot an image given as an array, and save to 
     the working directory as png
     """
@@ -39,7 +38,7 @@ def plotSave(pixelArray,name):
     figNo += 1
 
 
-def plotSaveLayers(pixelArray,name):
+def plotSaveLayers(pixelArray, name=None):
     """Separately plot and save the Y, Cb, and Cr layers of an image given as 
     an array to the working directory as png
     """
@@ -115,7 +114,7 @@ def decodeBitstream(bitstream,codebook,dimensions):
     return decodedArray.reshape(dimensions[0],dimensions[1])
 
 
-def steps4to8(pixelArray,label,workingDirectory):
+def steps4to8(pixelArray,workingDirectory, label=None):
     """Step 4 to step 8 of the lab assignemtn. 
     Repeated for original image and cropped image.
     """
@@ -123,7 +122,7 @@ def steps4to8(pixelArray,label,workingDirectory):
     ySize = np.shape(pixelArray)[1]
     logger.debug(f"size: {xSize}x{ySize}")
     layers = swapChannelLayers(pixelArray)
-    logger.info(f"{label} axes swapped")
+    # logger.info(f"{label} axes swapped")
     logger.debug(f"crop shape: {np.shape(pixelArray)}")
     logger.debug(f"crop[0] shape: {np.shape(pixelArray[0])}")
     logger.debug(f"crop[0,0] shape: {np.shape(pixelArray[0,0])}")
@@ -139,7 +138,8 @@ def steps4to8(pixelArray,label,workingDirectory):
     bins = np.arange(0,256,256/8)
     logger.debug(f"bins: {bins}")
     quantizedLayers = np.digitize(layers,bins)
-    logger.info(f"{label} quantized")
+    # logger.info(f"{label} quantized")
+    # logger.debug(f"quanitzed layers: \n{quantizedLayers}")
     ## Plot and save
     plotSaveLayers(quantizedLayers,f"Quantized {label} image")
 
@@ -170,7 +170,7 @@ def steps4to8(pixelArray,label,workingDirectory):
     codebook_y = generateCodebook(probability_y)
     codebook_cb = generateCodebook(probability_cb)
     codebook_cr = generateCodebook(probability_cr)
-    logger.info(f"{label} codebooks generated")
+    # logger.info(f"{label} codebooks generated")
     logger.debug(f"code dictionaries: \n {codebook_y} \n {codebook_cb} \n {codebook_cr}")
 
     ## Step 7
@@ -187,17 +187,17 @@ def steps4to8(pixelArray,label,workingDirectory):
     bitstream_cb = encodeSymbols(symbolStream_cb,codebook_cb)
     bitstream_cr = encodeSymbols(symbolStream_cr,codebook_cr)
     bitstream = "\n".join([bitstream_y,bitstream_cb,bitstream_cr])
-    logger.info(f"{label} encoded")    
+    # logger.info(f"{label} encoded")
 
     ## Step 8
     ## Save the compressed image into a text file
     with open(f"{workingDirectory}\\Encoded\\pattern-{label}.txt","w") as file:
         file.write(f"{xSize}x{ySize}\n{bitstream}")
         file.close()
-    return bitstream, [codebook_y,codebook_cb,codebook_cr]
+    return bitstream, [codebook_y,codebook_cb,codebook_cr], quantizedLayers
 
 
-def step10_1(path,codebooks,label):
+def step10_1(path,codebooks, label=None):
     """Read from a text file and pass data to step10_2 function"""
     ## Read encoded file
     with open(path,"r") as file:
@@ -206,14 +206,14 @@ def step10_1(path,codebooks,label):
         bitsream = lines[1:]
         file.close()
         # logger.debug(f"read bitsream: \n{bitsream}")
-    logger.info(f"file read")
+    # logger.info(f"file read")
 
     ## Step 10
     ## Decompress the outputs
     step10_2(bitsream,dimensions,codebooks,label)
 
 
-def step10_2(encodedData,dimensions,channelCodebooks,label):
+def step10_2(encodedData,dimensions,channelCodebooks, label=None):
     """Step 10 of the lab assignemtn.
     Repeated of original image and cropped image.
     """
@@ -226,7 +226,7 @@ def step10_2(encodedData,dimensions,channelCodebooks,label):
     decodedArray_y = decodeBitstream(readBitStream_y,channelCodebooks[0],dimensions)
     decodedArray_cb = decodeBitstream(readBitStream_cb,channelCodebooks[1],dimensions)
     decodedArray_cr = decodeBitstream(readBitStream_cr,channelCodebooks[2],dimensions)
-    logger.info(f"{label} decoded")
+    # logger.info(f"{label} decoded")
     # logger.debug(f"decoded array: \n{decodedArray_cb}")
     ## Merge channels
     decodedLayers = np.array([decodedArray_y,decodedArray_cb,decodedArray_cr])
@@ -257,9 +257,11 @@ if __name__ == "__main__":
 
     ## Step 4 to step 8
     ## Cropped image
-    croppedBitstream, croppedCodebooks = steps4to8(croppedImage,"cropped",workingDirectory)
+    croppedBitstream, croppedCodebooks, croppedQuantized = \
+        steps4to8(croppedImage,workingDirectory,"cropped")
     ## Original image
-    originalBitstream, originalCodebooks = steps4to8(image,"original",workingDirectory)
+    originalBitstream, originalCodebooks,originalQuantized = \
+        steps4to8(image,workingDirectory,"original")
     
     ## Step 10
     ## Cropped image
