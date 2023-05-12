@@ -1,4 +1,4 @@
-"""EE596 Lab 01 - generateCodebook COding
+"""EE596 Lab 01 - huffman coding
 E/17/371
 
 References:
@@ -228,7 +228,7 @@ class Encoder:
         """Save raw image, raw channels, and quantised channels as png"""
         saveImage(self.image,f"Original {self.label} image")
         saveChannels(self.layers,f"Original {self.label} image")
-        # saveImage(swapChannelLayers(self.quantisedLayers),f"Quantised {self.label} image")           
+        saveImage(swapChannelLayers(self.quantisedLayers),f"Quantised {self.label} image")           
         saveChannels(self.quantisedLayers,f"Quantised {self.label} image")
 
     def writeBitstream(self):
@@ -343,13 +343,17 @@ if __name__ == "__main__":
 
     ## Discussion 2
     ## Calucale the average length of the cropped image
-    logger.info(f"average length - cropped: {croppedImage.shape[0]}")
+    decodedCroppedSize = len(croppedEncode.bitstream)-2
+    decodedUncroppedSize =  len(uncroppedEncode.bitstream)-2
+    logger.debug(f"size - decoded cropped:               {decodedCroppedSize}")
+    logger.debug(f"size - decoded uncropped:             {decodedUncroppedSize}")
+    logger.debug(f"single layer size - original cropped: {croppedImage.size/croppedImage.shape[2]}")
+    logger.info(f"average length - cropped:              {decodedCroppedSize/(croppedEncode.xSize*croppedEncode.ySize)}")
 
     ## Discussion 3
     ## Compare compression ratios with matlab algorithm
     originalCroppedSize = 847*8
     origianlUncroppedSize = 812033*8
-    decodedCroppedSize = len(croppedEncode.bitstream)-2
-    decodedUncroppedSize =  len(uncroppedEncode.bitstream)-2
     logger.info(f"cr - cropped:   {originalCroppedSize/decodedCroppedSize}")
     logger.info(f"cr - uncropped: {origianlUncroppedSize/decodedUncroppedSize}")
+    
