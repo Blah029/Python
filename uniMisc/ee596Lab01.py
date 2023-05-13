@@ -129,7 +129,8 @@ def decodeBitstream(bitstream:str, codebook:dict, dimensions:list):
 
 def calculateEntropy(layers:np.ndarray):
     """Calculate and return the entropy of the source imagae (default) 
-    or quantised image"""
+    or quantised image
+    """
     channelEntropy = np.zeros(3)
     if layers.shape[2] == 3:
         layers = swapChannelLayers(layers)
@@ -241,7 +242,8 @@ class Encoder:
     
     def getCodebooks(self):
         """Return the codebook of Y,Cb,Cr channels 
-        as a list consisting of numpy arrays"""
+        as a list consisting of numpy arrays
+        """
         return [self.codebook_y,self.codebook_cb,self.codebook_cr]
 
 
