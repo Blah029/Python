@@ -46,18 +46,8 @@ def saveChannels(layers:np.ndarray, name:str=None):
     xSize = layers.shape[1]
     ySize = layers.shape[2]
     for i,layer in enumerate(layers):
-        ## Y channel
-        if i == 0:
-            composite = np.zeros((layers.shape))
-            composite[0] = layer.reshape(xSize,ySize)
-            composite[1] = np.ones((xSize,ySize))
-            composite[2] = np.ones((xSize,ySize))
-        ## Cb and Cr
-        else:
-            composite = np.zeros((layers.shape))
-            composite[0] = layer.reshape(xSize,ySize)
-            composite[i] = layer.reshape(xSize,ySize)
-        # logger.debug(f"composite: \n{composite}")
+        composite = np.zeros((layers.shape))
+        composite[i] = layer.reshape(xSize,ySize)
         saveImage(swapChannelLayers(composite),f"{name} layer {i+1}")
 
 
@@ -283,8 +273,8 @@ class Decoder:
 
     def saveFigures(self):
         """Save decoded channels, and decoded image as png"""
-        saveChannels(self.decodedLayers,f"Decoded {self.label} image")
         saveImage(self.decodedImage,f"Decoded {self.label} image")
+        saveChannels(self.decodedLayers,f"Decoded {self.label} image")
 
 
 if __name__ == "__main__":
