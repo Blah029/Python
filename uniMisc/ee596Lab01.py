@@ -157,7 +157,7 @@ def calculatePSNR(image1:np.ndarray, image2:np.ndarray):
 
 class Encoder:
     def __init__(self, image:np.ndarray, workingDirectory:str, 
-                 label:str=None):
+                 label:str=None, qLevels=8):
         """Initialise encoder with image data, path to 
         wroking directory, and image label
         """
@@ -165,6 +165,7 @@ class Encoder:
         self.image = image
         self.workingDirectory = workingDirectory
         self.label = label
+        self.qLevels = qLevels
         self.xSize = self.image.shape[0]
         self.ySize = self.image.shape[1]
         self.layers = swapChannelLayers(self.image)
@@ -177,9 +178,9 @@ class Encoder:
 
         ## Step 4
         ## Quantise output to 8 levels
-        bins = np.arange(0,1,1/8)
+        bins = np.arange(0,1,1/self.qLevels)
         logger.debug(f"bins: {bins}")
-        self.quantisedLayers = np.digitize(self.layers,bins)/8
+        self.quantisedLayers = np.digitize(self.layers,bins)/self.qLevels
         # logger.info(f"{self.label} quantised")
         # logger.debug(f"quanitzed layers: \n{self.quantisedLayers}")
 
