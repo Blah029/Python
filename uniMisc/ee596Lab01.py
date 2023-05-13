@@ -180,7 +180,8 @@ class Encoder:
         ## Quantise output to 8 levels
         bins = np.arange(0,1,1/self.qLevels)
         logger.debug(f"bins: {bins}")
-        self.quantisedLayers = np.digitize(self.layers,bins)/self.qLevels
+        # self.quantisedLayers = np.digitize(self.layers,bins)/self.qLevels
+        self.quantisedLayers = (np.digitize(self.layers,bins)-1)/(self.qLevels-1)
         # logger.info(f"{self.label} quantised")
         # logger.debug(f"quanitzed layers: \n{self.quantisedLayers}")
 
@@ -295,6 +296,7 @@ if __name__ == "__main__":
     figNo = 1    
     ## Select the starting point for the cropped window from E/17/371  
     start = np.array([3*60, 71*4])
+    qLevels = 8
     workingDirectory = "D:\\User Files\\Documents\\University\\Misc\\4th Year Work\\Semester 7\\EE596\\EE596 Lab 01"
     ## Step 2
     ## Read image
@@ -305,7 +307,7 @@ if __name__ == "__main__":
     
     ## Cropped image
     ## Steps 4 to step 7
-    croppedEncode = Encoder(croppedImage,workingDirectory,"cropped")
+    croppedEncode = Encoder(croppedImage,workingDirectory,"cropped",qLevels)
     croppedEncode.saveFigures()
     ## Step 8
     ## Save the compressed image into a text file
@@ -316,7 +318,7 @@ if __name__ == "__main__":
 
     ## Original image
     ## Steps 4 to step 7
-    uncroppedEncode = Encoder(uncroppedImage,workingDirectory,"uncropped")
+    uncroppedEncode = Encoder(uncroppedImage,workingDirectory,"uncropped",qLevels)
     uncroppedEncode.saveFigures()
     ## Step 8
     ## Save the compressed image into a text file
