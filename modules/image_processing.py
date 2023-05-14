@@ -1,6 +1,7 @@
 """Functions for manimulating R,B,G channels of images, and Huffman encoding 
 and decoding
 """
+
 import logging
 import numpy as np
 import matplotlib.image as img
@@ -125,7 +126,8 @@ def calculate_entropy(layers:np.ndarray):
         symbolSet = list(set(layer))
         probabilities = [np.size(layer[layer==i])/(layer.size)\
                                 for i in symbolSet]
-        channel_entropy[i] =  np.sum([p*np.log2(1.0/p) for p in probabilities])
+        channel_entropy[i] =  np.sum([p*np.log2(1.0/p) 
+                                      for p in probabilities])
         # logger.debug(f"layer entropy: {self.channel_entropy[i] }")
     return channel_entropy
 
@@ -165,7 +167,8 @@ class Encoder:
         bins = np.arange(0,1,1/self.qlevels)
         logger.debug(f"bins: {bins}")
         # self.quantised_layers = np.digitize(self.layers,bins)/self.qlevels
-        self.quantised_layers = (np.digitize(self.layers,bins)-1)/(self.qlevels-1)
+        self.quantised_layers = (np.digitize(self.layers,bins)-1)\
+            /(self.qlevels-1)
         # logger.info(f"{self.label} quantised")
         # logger.debug(f"quanitzed layers: \n{self.quantised_layers}")
 
@@ -177,9 +180,12 @@ class Encoder:
                                                 return_counts=True)
         uniqueSymbols_cr,counts_cr = np.unique(self.quantised_layers[2],
                                                 return_counts=True)
-        probability_y = np.array(list(zip(uniqueSymbols_y,counts_y/(self.size_x*self.size_y))))
-        probability_cb = np.array(list(zip(uniqueSymbols_cb,counts_cb/(self.size_x*self.size_y))))
-        probability_cr = np.array(list(zip(uniqueSymbols_cr,counts_cr/(self.size_x*self.size_y))))
+        probability_y = np.array(list(zip(uniqueSymbols_y,counts_y\
+                                          /(self.size_x*self.size_y))))
+        probability_cb = np.array(list(zip(uniqueSymbols_cb,counts_cb\
+                                           /(self.size_x*self.size_y))))
+        probability_cr = np.array(list(zip(uniqueSymbols_cr,counts_cr\
+                                           /(self.size_x*self.size_y))))
         testarray = np.array([[128, 0.47],[87, 0.25],
                                     [186, 0.25],[256, 0.03]])
         ## Sort in descending order of probablity
@@ -200,9 +206,12 @@ class Encoder:
         ## Step 7
         ## Compress both original and cropped images
         ## Convert to a stream of symbols
-        symbolStream_y = self.quantised_layers[0].reshape(self.size_x*self.size_y)
-        symbolStream_cb = self.quantised_layers[1].reshape(self.size_x*self.size_y)
-        symbolStream_cr = self.quantised_layers[2].reshape(self.size_x*self.size_y)
+        symbolStream_y = self.quantised_layers[0].reshape(self.size_x*\
+                                                          self.size_y)
+        symbolStream_cb = self.quantised_layers[1].reshape(self.size_x*\
+                                                           self.size_y)
+        symbolStream_cr = self.quantised_layers[2].reshape(self.size_x*\
+                                                           self.size_y)
         logger.debug(f"stream: {symbolStream_y.shape}, matrix: {self.quantised_layers.shape}")
         ## Map sybols into codewords using the codebook
         bitstream_y = encode_symbols(symbolStream_y,self.codebook_y)
@@ -261,7 +270,8 @@ class Decoder:
         # logger.info(f"{label} decoded")
         # logger.debug(f"decoded array: \n{decoded_array_cb}")
         ## Merge channels
-        self.decodedLayers = np.array([decoded_array_y,decoded_array_cb,decoded_array_cr])
+        self.decodedLayers = np.array([decoded_array_y,decoded_array_cb,\
+                                       decoded_array_cr])
         self.decodedImage = swap_channellayers(self.decodedLayers)
         logger.debug(f"decoded image shape: {self.decodedImage.shape}")
 
@@ -287,7 +297,8 @@ if __name__ == "__main__":
     image_uncropped = img.imread(f"{working_directory}\\Images\\Pattern-612x612.jpg")/256
     ## Step 3
     ## Select 16x16 cropped sub-image
-    image_cropped = image_uncropped[start[0]:start[0]+16, start[1]:start[1]+16]
+    image_cropped = image_uncropped[start[0]:start[0]+16, \
+                                    start[1]:start[1]+16]
     
     ## Cropped image
     ## Steps 4 to step 7
