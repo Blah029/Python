@@ -22,7 +22,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
-def plotPoints(x,y, colour=None, size=None, label=None, axis=None):
+def plot_points(x,y, colour=None, size=None, label=None, axis=None):
     """Plot scatter graph"""
     if axis == None:
         plt.plot(x,y,".", color=colour, markersize=size, label=label)
@@ -31,7 +31,7 @@ def plotPoints(x,y, colour=None, size=None, label=None, axis=None):
 
 
 
-def plotLine(x,y, colour=None, label=None, axis=None):
+def plot_line(x,y, colour=None, label=None, axis=None):
     """Plot line graph"""
     if axis == None:
         plt.plot(x,y,"-", color=colour, label=label)
@@ -39,7 +39,7 @@ def plotLine(x,y, colour=None, label=None, axis=None):
         axis.plot(x,y,"-", color=colour, label=label)
 
 
-def plotBestFitPoly(x,y, degree=1, label=None, plotColour="tab:blue"):
+def plot_bestfit_poly(x,y, degree=1, label=None, plotColour="tab:blue"):
     """Plot the best fiting polynomial curve of given degree to fit 
     given numpy arrays"""
     coefficients = np.polyfit(x,y,degree)
@@ -52,7 +52,7 @@ def plotBestFitPoly(x,y, degree=1, label=None, plotColour="tab:blue"):
     plt.plot(x,y,"o", color=plotColour)
 
 
-def plotBestFitLog(x,y, label=None, plotColour="tab:blue"):
+def plot_bestfit_log(x,y, label=None, plotColour="tab:blue"):
     """Plot the best fiting loarithmic curve to fit 
     given numpy arrays"""
     coefficients = np.polyfit(np.log(x),y,1)
@@ -63,7 +63,7 @@ def plotBestFitLog(x,y, label=None, plotColour="tab:blue"):
     plt.plot(x,y,"o", color=plotColour)
 
 
-def pointLabels(x,y, xOffset=None, yOffset=None):
+def show_labels(x,y, xOffset=None, yOffset=None):
     """Plot data points"""
     if yOffset == None:
         yOffset = xOffset
@@ -72,7 +72,7 @@ def pointLabels(x,y, xOffset=None, yOffset=None):
                  backgroundcolor="white", alpha=0.5)
 
 
-def setGrid(xLabel=None, yLabel=None, title=None, xscale=None, yscale=None):
+def set_grid(xLabel=None, yLabel=None, title=None, xscale=None, yscale=None):
     """Configure axis labels, title and other properties"""
     plt.xlabel(xLabel)
     plt.ylabel(yLabel)
@@ -87,7 +87,7 @@ def setGrid(xLabel=None, yLabel=None, title=None, xscale=None, yscale=None):
     plt.minorticks_on()
 
 
-def setSubGrid(axis=None, xLabel=None, yLable=None, xscale=None, 
+def set_subgrid(axis=None, xLabel=None, yLable=None, xscale=None, 
                yscale=None, title=None):
     """Configure axis labels, title and other properties of a subplot"""
     axis.set_xlabel(xLabel)
@@ -104,23 +104,23 @@ def setSubGrid(axis=None, xLabel=None, yLable=None, xscale=None,
     axis.minorticks_on()
     
 
-def testPlot():
+def test_plot():
     """testing graphs.py"""
     fs = 5
     t = np.linspace(0,1,fs*5+1)
     x_t = np.cos(2*np.pi*1*t)
 
-    plotPoints(t,x_t,"red",10,"plotPoints")
-    plotLine(t,x_t,"green","plotLine")
-    plotBestFitPoly(t,x_t,4,"plotBestFitPoly","black")
-    plotBestFitLog(np.array([1,2,3]),np.array([1,1.1,1.11]),
-                          "plotBestFitLog","yellow")
-    pointLabels(t,x_t,0.025,0)
-    setGrid("time","magnitude","test plot","log","log")
+    plot_points(t,x_t,"red",10,"plot_points")
+    plot_line(t,x_t,"green","plot_line")
+    plot_bestfit_poly(t,x_t,4,"plot_bestfit_poly","black")
+    plot_bestfit_log(np.array([1,2,3]),np.array([1,1.1,1.11]),
+                          "plot_bestfit_log","yellow")
+    show_labels(t,x_t,0.025,0)
+    set_grid("time","magnitude","test plot","log","log")
     plt.show()
 
 
-def testSubplot():
+def test_subplot():
     # Section 1 - Multplier Modulator/Demodulator
     # 1. Generate m(t)
     fm = 15000
@@ -139,10 +139,10 @@ def testSubplot():
     ax[0].magnitude_spectrum(m_t, Fs=fs, label="m(t)")
     ax[0].set_title("Modulator Output Frequency Spectrum")
     ax[1].magnitude_spectrum(c_t, Fs=fs, label="c(t)")
-    plotLine(t,m_t,"grey","plotLine",ax[2])
-    plotPoints(t,m_t,"orange",1,"plotPoints",ax[3])
+    plot_line(t,m_t,"grey","plot_line",ax[2])
+    plot_points(t,m_t,"orange",1,"plot_points",ax[3])
     for axis in ax:
-        setSubGrid(axis,"f /kHz","Magnitude","log", title="Common Title")
+        set_subgrid(axis,"f /kHz","Magnitude","log", title="Common Title")
         axis.set_xticks([1e4,1e5,1e6])
         axis.set_xticklabels([10,100,100])
     fig.tight_layout()
@@ -150,5 +150,5 @@ def testSubplot():
 
 
 if __name__ == "__main__":
-    testPlot()
-    testSubplot()
+    test_plot()
+    test_subplot()
