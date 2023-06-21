@@ -1,4 +1,4 @@
-"""EE596 Lab 01 - huffman coding
+"""EE596 Lab 01 - Huffman coding
 E/17/371
 
 References:
@@ -8,7 +8,6 @@ References:
 """
 import logging
 import numpy as np
-import math
 import matplotlib.image as img
 import matplotlib.pyplot as plt
 
@@ -280,7 +279,7 @@ class Decoder:
 if __name__ == "__main__":
     ## Set up the logger
     logging.basicConfig(format="[%(name)s][%(levelname)s] %(message)s")
-    logger = logging.getLogger("ee596Lab01")
+    logger = logging.getLogger("ee596-lab-01")
     logger.setLevel(logging.DEBUG)
     ## Reset figure numbner
     figNo = 1    
