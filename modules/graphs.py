@@ -1,23 +1,24 @@
 """Tools for plotting graphs with pyplot"""
 
-"""figure template
-# WIth subplots
-fig, ax = plt.subplots(_int_)
-ax.set_xscale(_string_)
-ax.set_yscale(_string_)
-ax.set_xlim(_int_,_int_)
-ax.set_ylim(_int_,_int_)
-# Without subplots
-plt.plot(_array_,_array_, label=_string_, color=_string_)
-plt.xlabel(_string_)
-plt.ylabel(_string_)
-plt.title(_string_)
-plt.legend()
-plt.grid()
-plt.grid(which="minor", alpha=0.25))
-plt.minorticks_on()
-plt.show()
-"""
+## figure template
+## WIth subplots
+# fig, ax = plt.subplots(_int_)
+# ax.set_xscale(_string_)
+# ax.set_yscale(_string_)
+# ax.set_xlim(_int_,_int_)
+# ax.set_ylim(_int_,_int_)
+## Without subplots
+# plt.figure()
+# plt.plot(_array_,_array_, label=_string_, color=_string_)
+# plt.xlabel(_string_)
+# plt.ylabel(_string_)
+# plt.title(_string_)
+# plt.legend()
+# plt.grid()
+# plt.grid(which="minor", alpha=0.25))
+# plt.minorticks_on()
+# plt.show()
+
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -132,7 +133,7 @@ def test_subplot():
     # 2. Multiply with carrier
     # c_t = np.cos(2*np.pi*fc*t)
     c_t = np.cos(2*np.pi*fc*t)
-    x_t = m_t*c_t
+    # x_t = m_t*c_t
 
     # Frequency domain
     fig, ax = plt.subplots(4)
