@@ -10,7 +10,7 @@ c_max = bandwidth * math.log2(1 + snr_linear)
 # No. of signal levels
 m = math.ceil(2**(c_max/(2*bandwidth)))
 
-print(f"Q1")
+print("Q1")
 print(f"Theoretical max. datarate is {c_max:.2f} bps.")
 print(f"No. of signal levels is {m:d}.\n")
 
@@ -23,6 +23,6 @@ c_max = bandwidth * math.log2(1 + snr_linear)
 c_practical = c_max *2/3
 # No. of signal levels
 m = math.ceil(2**(c_practical/(2*bandwidth)))
-print(f"Q2")
+print("Q2")
 print(f"Upper limit to the datarate is {c_max:.2f} bps.")
 print(f"Sinal levels needed for 2/3 of upper limit is {m:d}.\n")
