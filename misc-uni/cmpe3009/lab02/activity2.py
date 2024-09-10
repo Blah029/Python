@@ -33,7 +33,7 @@ def qam_demodulate(i_component: np.ndarray, q_component: np.ndarray):
     """Demodulate QAM signal into symbols"""
     quotient = i_component + levels_per_dimension // 2 - 0.5
     remainder = q_component + levels_per_dimension // 2 - 0.5
-    return quotient * levels_per_dimension + remainder
+    return quotient * levels_per_dimension + remainder.astype(int)
 
 
 if __name__ == "__main__":
@@ -57,7 +57,7 @@ if __name__ == "__main__":
     ## QAM modulation
     qam_i, qam_q = qam_modulate(input_symbols)
     ## Add noise to the signal
-    noise_std = 0.5
+    noise_std = 0.1
     noisy_i = qam_i + np.random.normal(0, noise_std, qam_i.shape)
     noisy_q = qam_q + np.random.normal(0, noise_std, qam_q.shape)
     ## Visualise
